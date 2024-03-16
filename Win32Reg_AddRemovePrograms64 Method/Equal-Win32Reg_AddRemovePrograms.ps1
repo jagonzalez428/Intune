@@ -3,7 +3,7 @@ try {
     $DisplayName = "Google Chrome"
     $Version = "122.0.6261.129"
     
-    $Detection = get-cimInstance -class Win32Reg_AddRemovePrograms64 | where-object { $_.Displayname -eq $DisplayName -and $_.Version -eq $Version }
+    $Detection = get-cimInstance -class Win32Reg_AddRemovePrograms64 | where-object { $_.Displayname -eq $DisplayName -and $_.Version -ge $Version }
     if ($Detection) {
         Write-Host "Application $DisplayName is currently installed."
         exit 0

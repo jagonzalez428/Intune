@@ -9,7 +9,7 @@ try {
         $Name = "Google Chrome"
         $Version = "122.0.6261.129"
         
-        $DetectedApp = Get-package | Where-Object { $_.Name -eq $Name -and $_.Version -eq $Version }
+        $DetectedApp = Get-package | Where-Object { $_.Name -eq $Name -and $_.Version -ge $Version }
         if ($DetectedApp) {
             Write-Host "$($Name) is currently installed." -ForegroundColor Green
             Exit 0

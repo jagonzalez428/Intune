@@ -10,7 +10,7 @@ try {
     Pop-Location
     $WinVer = (-split $WingetInfo[-1])[-1]
     $WinApp = (-split $WingetInfo[-1])[-2]
-    if (($WingetID -eq $WinApp) -and ($WingetVersion -eq $WinVer)) {
+    if (($WingetID -eq $WinApp) -and ($WingetVersion -le $WinVer)) {
         Write-Host "$($WingetID) is currently installed." -ForegroundColor Green
         Exit 0
     }
