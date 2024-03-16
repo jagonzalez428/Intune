@@ -50,20 +50,33 @@ $WinGetResolve = Resolve-Path "C:\Program Files\WindowsApps\Microsoft.DesktopApp
 $WinGetPathExe = $WinGetResolve[-1].Path
 $WinGetPath = Split-Path -Path $WinGetPathExe -Parent
 Push-Location $WinGetPath
-$WingetList = .\winget.exe list $SearchFor
+$WingetList = .\winget.exe list $SearchFor --source winget
 Pop-Location
 $DetectedID = ( -split ($wingetlist[-1])) | select-string "$($SearchFor)*"
-if ($DetectedID)
-{ Write-host "Winget Detection Successful" -ForegroundColor Green }
+if ($DetectedID) {
+    Write-host "Winget Detection Successful" -ForegroundColor Green 
+    $WingetVer = (-split $wingetlist[-1])[-1]
+    $WingetID = (-split $wingetlist[-1])[-2]
+}
 else { Write-host "Winget Detection Failed" -ForegroundColor Red }
 
 ################################ Get-AppX Method
-
-if (Get-AppxPackage | Where-Object name -Like "*$($SearchFor)*")
-{ Write-host "AppX Detection Successful" -ForegroundColor Green }
+$AppX = Get-AppxPackage | Where-Object name -Like "*$($SearchFor)*"
+if ($AppX) { Write-host "AppX Detection Successful" -ForegroundColor Green }
 else { Write-host "AppX Detection Failed" -ForegroundColor Red }
+
+################################ Results
 
 if ($ProductCheck.DisplayName) {
     Write-host $ProductCheck.DisplayName -ForegroundColor Magenta
     write-host $ProductCheck.DisplayVersion -ForegroundColor Magenta
 }
+if ($DetectedID) {
+    Write-host "Winget ID: $WingetID" -ForegroundColor Magenta
+    Write-host "Winget Version: $Wingetver" -ForegroundColor Magenta
+}
+if ($AppX) {
+    Write-host "AppX Name: $($AppX.Name)" -ForegroundColor Magenta
+    Write-host "Appx Version: $($AppX.Version)" -ForegroundColor Magenta
+}
+
