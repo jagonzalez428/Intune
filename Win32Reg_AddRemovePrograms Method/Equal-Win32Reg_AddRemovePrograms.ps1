@@ -5,11 +5,11 @@ try {
     
     $Detection = get-cimInstance -class Win32Reg_AddRemovePrograms | where-object { $_.Displayname -eq $DisplayName -and $_.Version -eq $Version }
     if ($Detection) {
-        Write-Host "Application $DisplayName is currently installed."
+        Write-Host "Application $DisplayName is currently installed." -ForegroundColor Green
         exit 0
     }
     else {
-        Write-Host "Application $DisplayName is currently not installed."
+        Write-Host "Application $DisplayName is currently not installed." -ForegroundColor Green
         exit 1
     }
 }
